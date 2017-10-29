@@ -1,0 +1,29 @@
+{
+  "name": "image-search-abstraction-layer",
+  "version": "1.0.0",
+  "description": "image search abstraction layer built using node.js for freecodecamp",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marckimbrey/image-search-abstraction-layer.git"
+  },
+  "keywords": [
+    "image-search",
+    "fcc",
+    "node"
+  ],
+  "author": "marckimbrey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marckimbrey/image-search-abstraction-layer/issues"
+  },
+  "homepage": "https://github.com/marckimbrey/image-search-abstraction-layer#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33"
+  }
+}
