@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongo = require('mongodb').MongoClient;
 const dburl = process.env.MONGODB_URI || "mongodb://localhost:27017/db";
+const request = require('request');
 app.use(bodyParser.json());
 
 app.get('/api/imagesearch/:searchValue*', (req, res) => {
@@ -17,16 +18,33 @@ app.get('/api/imagesearch/:searchValue*', (req, res) => {
 
      collection.insert({searchValue, timeSearched: new Date()},
        (err, data) => {
-         console.log('inserted', data)
          db.close();
      })
 
-   })
+   });
 
-   // request bing api
+   // request pixabay api
+   const url = 'https://pixabay.com/api/?key='+ process.env.API_KEY + "&q=" + encodeURIComponent(searchValue) + "&image_type=photo";
+   request(url, (err, response, body) => {
+     if (!err && response.statusCode === 200) {
+       let results = JSON.parse(body).hits;
+       let filteredResults = results.map((cur, i)  => {
+         return {
+           url: cur.pageURL,
+           tags: cur.tags,
+           user: cur.user
+         }
+       })
+
+       res.json(filteredResults)
 
 
-  res.json({searchValue, offset});
+     } else {
+       console.log("Got an error: ", error
+       , ", status code: ", response.statusCode)
+     }
+   });
+
 });
 
 app.get('/api/latest/imagesearch/', (req, res) => {
